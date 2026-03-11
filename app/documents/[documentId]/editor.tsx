@@ -159,253 +159,81 @@
 
 // // export default Editor
 
-// "use client";
-
-// import { useEditor, EditorContent } from "@tiptap/react";
-// import StarterKit from "@tiptap/starter-kit";
-// import Heading from "@tiptap/extension-heading";
-// import { TaskItem, TaskList } from "@tiptap/extension-list";
-// import { TableKit } from "@tiptap/extension-table";
-// import Image from "@tiptap/extension-image";
-// import FileHandler from "@tiptap/extension-file-handler";
-// import { useEditorStore } from "@/store/use-editor-store";
-// import Link from '@tiptap/extension-link'
-// import { FontFamily, TextStyle } from "@tiptap/extension-text-style";
-// import Highlight from "@tiptap/extension-highlight";
-// import Color from "@tiptap/extension-color";
-// import TextAlign from '@tiptap/extension-text-align'
-// import { FontSizeExtension } from "@/extensions/font-size";
-// import { LineHeightExtension } from "@/extensions/line-height";
-// import { Ruler } from "./ruler";
-// import {useLiveblocksExtension} from "@liveblocks/react-tiptap"
-// import { Threads } from "./threads";
-// import { useStorage } from "@liveblocks/react";
-// import { LEFT_MARGIN_DEFAULT,RIGHT_MARGIN_DEFAULT } from "@/constants/margins";
-// interface EditorProps {
-//   initialContent? :string | undefined;
-// }
-
-// const Editor = ({initialContent}:EditorProps) => {
-
-//   const leftMargin = useStorage((root) => root.leftMargin) ?? LEFT_MARGIN_DEFAULT;
-//   const rightMargin = useStorage((root) => root.rightMargin) ?? RIGHT_MARGIN_DEFAULT;
-
-//   const liveBlocks = useLiveblocksExtension({
-//     initialContent,
-//     offlineSupport_experimental:true,
-//   });
-//   const { setEditor } = useEditorStore();
-
-//   const editor = useEditor({
-//       immediatelyRender: false,
-//       onCreate({ editor }) {
-//       setEditor(editor);
-//     },
-//     onDestroy() {
-//       setEditor(null);
-//     },
-//     onUpdate({ editor }) {
-//       setEditor(editor);
-//     },
-//     onSelectionUpdate({ editor }) {
-//       setEditor(editor);
-//     },
-
-//     editorProps: {
-//       attributes: {
-//         style: `padding-left:${leftMargin}px; padding-right:${rightMargin}px;`, 
-//         class:
-//           "focus:outline-none print:border-0 bg-white border border-[#C7C7C7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
-//       },
-//     },
-//     extensions: [
-//       liveBlocks,
-//       StarterKit.configure({
-//         history: false,
-//       }),
-//       LineHeightExtension.configure({
-//         types:["heading", "paragraph"],
-//         defaultLineHeight: "normal",
-//       }),
-//       FontSizeExtension,
-
-//       Heading.configure({
-//         levels: [1, 2, 3, 4, 5, 6],
-//       }),
-
-//       /* ✅ MOVE TEXT ALIGN HERE */
-//       TextAlign.configure({
-//         types: ["heading", "paragraph"],
-//       }),
-
-//       Link.configure({
-//         openOnClick: false,
-//         autolink: true,
-//         defaultProtocol: "https",
-//         protocols: ["http", "https"],
-//       }),
-
-//       Image,
-
-//       Highlight.configure({ multicolor: true }),
-
-//       TextStyle,
-
-//       Color.configure({
-//         types: ["textStyle"],
-//       }),
-
-//       FontFamily.configure({
-//         types: ["textStyle"],
-//       }),
-
-//       TaskList,
-//       TaskItem.configure({
-//         nested: true,
-//       }),
-
-//       TableKit.configure({
-//         table: { resizable: true },
-//       }),
-
-//       FileHandler.configure({
-//         allowedMimeTypes: [
-//           "image/png",
-//           "image/jpeg",
-//           "image/gif",
-//           "image/webp",
-//         ],
-//         onDrop: (currentEditor, files, pos) => {
-//           files.forEach((file) => {
-//             const reader = new FileReader();
-//             reader.readAsDataURL(file);
-
-//             reader.onload = () => {
-//               currentEditor
-//                 .chain()
-//                 .insertContentAt(pos, {
-//                   type: "image",
-//                   attrs: { src: reader.result },
-//                 })
-//                 .focus()
-//                 .run();
-//             };
-//           });
-//         },
-//       }),
-//     ],
-
-//     content: `
-      
-//     `,
-
-//     immediatelyRender: false,
-//   });
-
-//   return (
-//     <div className="size-full overflow-x-auto bg-[#F9FBFD] px-4 ">
-//       <Ruler/>
-//       <div className="min-w-max flex justify-center w-[816px]  mx-auto">
-//         <EditorContent editor={editor} />
-//         <Threads editor={editor} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Editor;
-
-
 "use client";
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import History from "@tiptap/extension-history";
 import Heading from "@tiptap/extension-heading";
 import { TaskItem, TaskList } from "@tiptap/extension-list";
 import { TableKit } from "@tiptap/extension-table";
 import Image from "@tiptap/extension-image";
 import FileHandler from "@tiptap/extension-file-handler";
 import { useEditorStore } from "@/store/use-editor-store";
-import Link from "@tiptap/extension-link";
+import Link from '@tiptap/extension-link'
 import { FontFamily, TextStyle } from "@tiptap/extension-text-style";
 import Highlight from "@tiptap/extension-highlight";
 import Color from "@tiptap/extension-color";
-import TextAlign from "@tiptap/extension-text-align";
+import TextAlign from '@tiptap/extension-text-align'
 import { FontSizeExtension } from "@/extensions/font-size";
 import { LineHeightExtension } from "@/extensions/line-height";
 import { Ruler } from "./ruler";
-import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
+import {useLiveblocksExtension} from "@liveblocks/react-tiptap"
 import { Threads } from "./threads";
 import { useStorage } from "@liveblocks/react";
-import {
-  LEFT_MARGIN_DEFAULT,
-  RIGHT_MARGIN_DEFAULT,
-} from "@/constants/margins";
-
+import { LEFT_MARGIN_DEFAULT,RIGHT_MARGIN_DEFAULT } from "@/constants/margins";
 interface EditorProps {
-  initialContent?: string | undefined;
+  initialContent? :string | undefined;
 }
 
-const Editor = ({ initialContent }: EditorProps) => {
-  const leftMargin =
-    useStorage((root) => root.leftMargin) ?? LEFT_MARGIN_DEFAULT;
+const Editor = ({initialContent}:EditorProps) => {
 
-  const rightMargin =
-    useStorage((root) => root.rightMargin) ?? RIGHT_MARGIN_DEFAULT;
+  const leftMargin = useStorage((root) => root.leftMargin) ?? LEFT_MARGIN_DEFAULT;
+  const rightMargin = useStorage((root) => root.rightMargin) ?? RIGHT_MARGIN_DEFAULT;
 
   const liveBlocks = useLiveblocksExtension({
     initialContent,
-    offlineSupport_experimental: true,
+    offlineSupport_experimental:true,
   });
-
   const { setEditor } = useEditorStore();
 
   const editor = useEditor({
-    immediatelyRender: false,
-
-    onCreate({ editor }) {
+      immediatelyRender: false,
+      onCreate({ editor }) {
       setEditor(editor);
     },
-
     onDestroy() {
       setEditor(null);
     },
-
     onUpdate({ editor }) {
       setEditor(editor);
     },
-
     onSelectionUpdate({ editor }) {
       setEditor(editor);
     },
 
     editorProps: {
       attributes: {
-        style: `padding-left:${leftMargin}px; padding-right:${rightMargin}px;`,
+        style: `padding-left:${leftMargin}px; padding-right:${rightMargin}px;`, 
         class:
           "focus:outline-none print:border-0 bg-white border border-[#C7C7C7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
       },
     },
-
     extensions: [
       liveBlocks,
-
-      StarterKit,
-
-      History,
-
+      StarterKit.configure({
+        history: false,
+      }),
       LineHeightExtension.configure({
-        types: ["heading", "paragraph"],
+        types:["heading", "paragraph"],
         defaultLineHeight: "normal",
       }),
-
       FontSizeExtension,
 
       Heading.configure({
         levels: [1, 2, 3, 4, 5, 6],
       }),
 
+      /* ✅ MOVE TEXT ALIGN HERE */
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
@@ -419,9 +247,7 @@ const Editor = ({ initialContent }: EditorProps) => {
 
       Image,
 
-      Highlight.configure({
-        multicolor: true,
-      }),
+      Highlight.configure({ multicolor: true }),
 
       TextStyle,
 
@@ -434,15 +260,12 @@ const Editor = ({ initialContent }: EditorProps) => {
       }),
 
       TaskList,
-
       TaskItem.configure({
         nested: true,
       }),
 
       TableKit.configure({
-        table: {
-          resizable: true,
-        },
+        table: { resizable: true },
       }),
 
       FileHandler.configure({
@@ -452,7 +275,6 @@ const Editor = ({ initialContent }: EditorProps) => {
           "image/gif",
           "image/webp",
         ],
-
         onDrop: (currentEditor, files, pos) => {
           files.forEach((file) => {
             const reader = new FileReader();
@@ -476,13 +298,14 @@ const Editor = ({ initialContent }: EditorProps) => {
     content: `
       
     `,
+
+    immediatelyRender: false,
   });
 
   return (
-    <div className="size-full overflow-x-auto bg-[#F9FBFD] px-4">
-      <Ruler />
-
-      <div className="min-w-max flex justify-center w-[816px] mx-auto">
+    <div className="size-full overflow-x-auto bg-[#F9FBFD] px-4 ">
+      <Ruler/>
+      <div className="min-w-max flex justify-center w-[816px]  mx-auto">
         <EditorContent editor={editor} />
         <Threads editor={editor} />
       </div>
@@ -491,3 +314,180 @@ const Editor = ({ initialContent }: EditorProps) => {
 };
 
 export default Editor;
+
+
+// "use client";
+
+// import { useEditor, EditorContent } from "@tiptap/react";
+// import StarterKit from "@tiptap/starter-kit";
+// import History from "@tiptap/extension-history";
+// import Heading from "@tiptap/extension-heading";
+// import { TaskItem, TaskList } from "@tiptap/extension-list";
+// import { TableKit } from "@tiptap/extension-table";
+// import Image from "@tiptap/extension-image";
+// import FileHandler from "@tiptap/extension-file-handler";
+// import { useEditorStore } from "@/store/use-editor-store";
+// import Link from "@tiptap/extension-link";
+// import { FontFamily, TextStyle } from "@tiptap/extension-text-style";
+// import Highlight from "@tiptap/extension-highlight";
+// import Color from "@tiptap/extension-color";
+// import TextAlign from "@tiptap/extension-text-align";
+// import { FontSizeExtension } from "@/extensions/font-size";
+// import { LineHeightExtension } from "@/extensions/line-height";
+// import { Ruler } from "./ruler";
+// import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
+// import { Threads } from "./threads";
+// import { useStorage } from "@liveblocks/react";
+// import {
+//   LEFT_MARGIN_DEFAULT,
+//   RIGHT_MARGIN_DEFAULT,
+// } from "@/constants/margins";
+
+// interface EditorProps {
+//   initialContent?: string | undefined;
+// }
+
+// const Editor = ({ initialContent }: EditorProps) => {
+//   const leftMargin =
+//     useStorage((root) => root.leftMargin) ?? LEFT_MARGIN_DEFAULT;
+
+//   const rightMargin =
+//     useStorage((root) => root.rightMargin) ?? RIGHT_MARGIN_DEFAULT;
+
+//   const liveBlocks = useLiveblocksExtension({
+//     initialContent,
+//     offlineSupport_experimental: true,
+//   });
+
+//   const { setEditor } = useEditorStore();
+
+//   const editor = useEditor({
+//     immediatelyRender: false,
+
+//     onCreate({ editor }) {
+//       setEditor(editor);
+//     },
+
+//     onDestroy() {
+//       setEditor(null);
+//     },
+
+//     onUpdate({ editor }) {
+//       setEditor(editor);
+//     },
+
+//     onSelectionUpdate({ editor }) {
+//       setEditor(editor);
+//     },
+
+//     editorProps: {
+//       attributes: {
+//         style: `padding-left:${leftMargin}px; padding-right:${rightMargin}px;`,
+//         class:
+//           "focus:outline-none print:border-0 bg-white border border-[#C7C7C7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
+//       },
+//     },
+
+//     extensions: [
+//       liveBlocks,
+
+//       StarterKit,
+
+//       History,
+
+//       LineHeightExtension.configure({
+//         types: ["heading", "paragraph"],
+//         defaultLineHeight: "normal",
+//       }),
+
+//       FontSizeExtension,
+
+//       Heading.configure({
+//         levels: [1, 2, 3, 4, 5, 6],
+//       }),
+
+//       TextAlign.configure({
+//         types: ["heading", "paragraph"],
+//       }),
+
+//       Link.configure({
+//         openOnClick: false,
+//         autolink: true,
+//         defaultProtocol: "https",
+//         protocols: ["http", "https"],
+//       }),
+
+//       Image,
+
+//       Highlight.configure({
+//         multicolor: true,
+//       }),
+
+//       TextStyle,
+
+//       Color.configure({
+//         types: ["textStyle"],
+//       }),
+
+//       FontFamily.configure({
+//         types: ["textStyle"],
+//       }),
+
+//       TaskList,
+
+//       TaskItem.configure({
+//         nested: true,
+//       }),
+
+//       TableKit.configure({
+//         table: {
+//           resizable: true,
+//         },
+//       }),
+
+//       FileHandler.configure({
+//         allowedMimeTypes: [
+//           "image/png",
+//           "image/jpeg",
+//           "image/gif",
+//           "image/webp",
+//         ],
+
+//         onDrop: (currentEditor, files, pos) => {
+//           files.forEach((file) => {
+//             const reader = new FileReader();
+//             reader.readAsDataURL(file);
+
+//             reader.onload = () => {
+//               currentEditor
+//                 .chain()
+//                 .insertContentAt(pos, {
+//                   type: "image",
+//                   attrs: { src: reader.result },
+//                 })
+//                 .focus()
+//                 .run();
+//             };
+//           });
+//         },
+//       }),
+//     ],
+
+//     content: `
+      
+//     `,
+//   });
+
+//   return (
+//     <div className="size-full overflow-x-auto bg-[#F9FBFD] px-4">
+//       <Ruler />
+
+//       <div className="min-w-max flex justify-center w-[816px] mx-auto">
+//         <EditorContent editor={editor} />
+//         <Threads editor={editor} />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Editor;
