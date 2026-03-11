@@ -1,7 +1,29 @@
+// import { defineSchema, defineTable } from "convex/server";
+// import { v } from "convex/values";
+
+// // @snippet start schema
+// export default defineSchema({
+//   documents: defineTable({
+//     title: v.string(),
+//     intitalContent: v.optional(v.string()),
+//     ownerId: v.string(),
+//     roomId: v.optional(v.string()),
+//     organizationId: v.optional(v.string()),
+//   })
+//   .index("by_owner_id",["ownerId"])
+//   .index("by_organization_id",["organizationId"])
+//   .searchIndex("serch_title",{
+//     searchField: "title",
+//     filterFields:["ownerId","organizationId"],
+//   }),
+// });
+
+
+
+
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
-// @snippet start schema
 export default defineSchema({
   documents: defineTable({
     title: v.string(),
@@ -10,12 +32,10 @@ export default defineSchema({
     roomId: v.optional(v.string()),
     organizationId: v.optional(v.string()),
   })
-  .index("by_owner_id",["ownerId"])
-  .index("by_organization_id",["organizationId"])
-  .searchIndex("serch_title",{
-    searchField: "title",
-    filterFields:["ownerId","organizationId"],
-  }),
+    .index("by_owner_id", ["ownerId"])
+    .index("by_organization_id", ["organizationId"])
+    .searchIndex("search_title", {
+      searchField: "title",
+      filterFields: ["ownerId", "organizationId"],
+    }),
 });
-
-
